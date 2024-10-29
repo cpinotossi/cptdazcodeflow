@@ -5,6 +5,9 @@ npm i
 node -r dotenv/config .\src\app.js dotenv_config_path=.env
 node -r dotenv/config .\src\app.js dotenv_config_path=.env.dev
 Start-Process "msedge.exe" -ArgumentList "--inprivate"
+npm install -g pm2
+pm2 start .\src\app.js
+pm2 delete app  
 ~~~
 
 ## Misc
@@ -18,7 +21,6 @@ git init
 git remote add origin https://github.com/cpinotossi/$prefix.git
 git remote -v
 git status
-
 git add .gitignore
 git add *
 git commit -m"init"

@@ -4,8 +4,8 @@
   "description": "A Node.js & Express web app calling Microsoft Graph API using MSAL Node",
   "main": "src/app.js",
   "scripts": {
-    "start": "STORAGEACCOUNTKEY=$(az storage account keys list -n $prefix --query [0].value -o tsv) STORAGEACCOUNTNAME=$prefix node src/app.js",
-    "dev": "nodemon src/app.js ./.env.dev"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "author": "",
   "license": "MIT",
@@ -24,6 +24,8 @@
     "express-session": "^1.17.1",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.12.3",
+    "morgan": "^1.10.0",
+    "pm2": "^5.4.2",
     "uuid": "^8.3.1",
     "xml2json": "^0.12.0"
   },

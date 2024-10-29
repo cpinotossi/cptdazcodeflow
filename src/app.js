@@ -12,6 +12,7 @@ const app = express();
 const https = require('https');
 const http = require('http');
 const fs = require('fs');
+const morgan = require('morgan');
 
 async function initializeApp() {
     const appSettings = await getConfig();
@@ -20,10 +21,19 @@ async function initializeApp() {
     // const { get } = require('http');
     const authProvider = new msalWrapper.AuthProvider(appSettings);
 
+    // Custom token to log request headers
+    morgan.token('req-headers', (req) => JSON.stringify(req.headers));
+    // Custom token to log response headers
+    morgan.token('res-headers', (req, res) => JSON.stringify(res.getHeaders()));
+    // Morgan format string to include the custom tokens
+    const format = ':method :url :status :res[content-length] - :response-time ms\nRequest Headers: :req-headers\nResponse Headers: :res-headers';
+    app.use(morgan(format));
+
     app.locals = {
         appSettings,
         authProvider
     };
+
     // View engine
     app.set('views', path.join(__dirname, './views'));
     app.set('view engine', 'ejs');
@@ -61,6 +71,7 @@ async function getConfig() {
     // const appSettings = require('../appSettings.json');
     // const envFilePath = process.argv[2] || './.env.dev';
     // require('dotenv').config({ path: './.env.dev' });
+    require('dotenv').config();
     const appSettings = require(`../appSettings.json`);
     // console.log(process.argv[2])
     // const envFilePath = process.argv[2] || './.env';
