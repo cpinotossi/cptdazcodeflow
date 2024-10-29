@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" status="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="/style.css">
+        <title>Storage</title>
+    </head>
+    <body>
+
+        <%- include('../includes/navbar', {isAuthenticated: isAuthenticated, configured}); %>
+
+        <div class="table-area-div">
+            <p>Calling <strong>Microsoft Storage API</strong>...</p>
+            <ul>
+                <li><strong>resource:</strong> <mark><%= storage.EnumerationResults.ServiceEndpoint %></mark></li>
+                <li><strong>container:</strong> <mark><%= storage.EnumerationResults.ContainerName %></mark></li>
+                <li><strong>scope:</strong> <mark>https://storage.azure.com/user_impersonation</mark></li>
+                
+            </ul>
+            <p>Contents of the <strong>response</strong> is below:</p>
+        </div>
+
+        <div class="table-area-div">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Creation-Time</th>
+                        <th scope="col">AccessTier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <% var blobArray = storage.EnumerationResults.Blobs.Blob;%>
+                        <%for (var i=0; i<blobArray.length; i++){%>
+                        <tr>
+                            <td><a href="<%= storage.EnumerationResults.ServiceEndpoint %><%= storage.EnumerationResults.ContainerName %>/<%= blobArray[i].Name %>?<%= sasToken %>" target="_blank"><%= blobArray[i].Name %></a></td>
+                            <td><%= blobArray[i].Properties['Creation-Time'] %></td>
+                            <td><%= blobArray[i].Properties.AccessTier %></td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div> 
+
+        <%- include('../includes/footer'); %>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>  
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </body>
+</html>
