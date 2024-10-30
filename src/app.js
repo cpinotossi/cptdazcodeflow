@@ -17,7 +17,7 @@ const morgan = require('morgan');
 async function initializeApp() {
     const appSettings = await getConfig();
     const msalWrapper = require('./msal-express-wrapper/auth-provider');
-    const { systemErrorRetryPolicy } = require('@azure/core-http');
+    // const { systemErrorRetryPolicy } = require('@azure/core-http');
     // const { get } = require('http');
     const authProvider = new msalWrapper.AuthProvider(appSettings);
 
