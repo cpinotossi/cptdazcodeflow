@@ -1,10 +1,34 @@
 # Microsoft authentication, Express.js and oauth code flow
 
+Install latest Node.js based on https://nodejs.org/en/download/package-manager
+
 ~~~pwsh
+# installs fnm (Fast Node Manager)
+winget install Schniz.fnm
+
+# configure fnm environment
+fnm env --use-on-cd | Out-String | Invoke-Expression
+
+# download and install Node.js
+fnm use --install-if-missing 22
+
+# verifies the right Node.js version is in the environment
+node -v # should print `v22.11.0`
+
+# verifies the right npm version is in the environment
+npm -v # should print `10.9.0`
+~~~
+
+~~~pwsh
+
+npm outdated @azure/msal-node
+npm install @azure/msal-node@latest
+
 npm i
 node -r dotenv/config .\src\app.js dotenv_config_path=.env
 node -r dotenv/config .\src\app.js dotenv_config_path=.env.dev
 Start-Process "msedge.exe" -ArgumentList "--inprivate"
+Start-Process "msedge.exe" -ArgumentList "--inprivate", "http://localhost:8000"
 npm install -g pm2
 pm2 start .\src\app.js
 pm2 delete app  
